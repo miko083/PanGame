@@ -1,0 +1,58 @@
+<html>
+<head>
+	<title> Pan Game </title>
+	<link rel = "stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+</head>
+<body>
+				{% if end_of_game == 1 %}
+				<script>
+					alert("End of game. Click Reset button to play again if you wish.")
+				</script>
+				{% endif %}
+        <div class="row1">
+					<form action="/reset">
+						<button class="buttonReset"> Reset </button>
+					</form>
+					{% if player_one_move == True %}
+					<form action="#" method="post">
+						<button class="buttonPlaceThreeCards" name="request_change" type="submit" value="2137"> Three cards </button>
+					</form>
+            {% for i in range(0, player_one_cards | length) %}
+								<form action="#" method="POST">
+								<input type="hidden" name="request_change" value="{{i}}">
+								{% if player_one_cards | length < 16 %}
+								<input class="big" type="image" src="{{url_for('static', filename='images/' + player_one_cards[i] + '.png')}}">
+								{% else %}
+								<input class="small" type="image" src="{{url_for('static', filename= 'images/' + player_one_cards[i] + '.png')}}">
+								{% endif %}
+							</form>
+            {% endfor %}
+					{% endif %}
+        </div>
+		<div class="row2">
+            {% for card in main_deck_cards %}
+								<div class = "col-1"><img src="{{url_for('static', filename= 'images/' + card + '.png')}}" class="cardMainDeck"></div>
+            {% endfor %}
+         </div>
+		<div class="row1">
+			{% if player_two_move == True %}
+			<form action="#" method="post">
+				<button class="buttonPlaceThreeCards" name="request_change" type="submit" value="2137"> Three cards </button>
+			</form>
+					{% for i in range(0, player_two_cards | length) %}
+							<form action="#" method="POST">
+							<div class = "col-1">
+							<input type="hidden" name="request_change" value="{{i}}">
+							{% if player_two_cards | length < 16 %}
+							<input class="big" type="image" src="{{url_for('static', filename= 'images/' + player_two_cards[i] + '.png')}}">
+							{% else %}
+							<input class="small" type="image" src="{{url_for('static', filename= 'images/' + player_two_cards[i] + '.png')}}">
+							{% endif %}
+						</div>
+				</form>
+			{% endfor %}
+		{% endif %}
+         </div>
+	</div>
+</body>
+</html>
